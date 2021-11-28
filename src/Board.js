@@ -14,7 +14,7 @@ class Board extends React.Component {
     };
   }
   componentDidMount() {
-    this.interval = setInterval(() => this.fetchData(), 1000);
+    this.interval = setInterval(() => this.fetchData(), 90);
   }
 
   componentWillUnmount() {
