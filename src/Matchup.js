@@ -7,22 +7,32 @@ class Matchup extends React.Component {
         this.state = {
             users: props.users,
             rosters: props.rosters,
-            matchup: props.matchup,
+            player1: props.player1,
+            player2: props.player2,
         };
     }
   
     render() {
-        const { matchup, rosters, users } = this.state;
-        const rosterId = matchup["roster_id"];
-        const userId = rosters.find(roster => roster["roster_id"] === rosterId)["owner_id"];
-        const teamName = users.find(user => user["user_id"] === userId)["metadata"]["team_name"];
+        const { player1, player2, rosters, users } = this.state;
+        const rosterId1 = player1["roster_id"];
+        const userId1 = rosters.find(roster => roster["roster_id"] === rosterId1)["owner_id"];
+        const teamName1 = users.find(user => user["user_id"] === userId1)["metadata"]["team_name"];
+        const rosterId2 = player2["roster_id"];
+        const userId2 = rosters.find(roster => roster["roster_id"] === rosterId2)["owner_id"];
+        const teamName2 = users.find(user => user["user_id"] === userId2)["metadata"]["team_name"];
         return (
             <div className="match-row">
                 <p>
-                    Team: {teamName}
+                    Team: {teamName1}
                 </p>
                 <p>
-                    Points: {matchup["points"]}
+                    Points: {player1["points"]}
+                </p>
+                <p>
+                    Team: {teamName2}
+                </p>
+                <p>
+                    Points: {player2["points"]}
                 </p>
                 <br />
             </div>

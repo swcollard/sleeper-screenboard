@@ -53,13 +53,13 @@ class Board extends React.Component {
         }
       )
 
-    fetch("https://api.sleeper.app/v1/league/726146253938888704/matchups/3")
+    fetch("https://api.sleeper.app/v1/league/726146253938888704/matchups/12")
       .then(res => res.json())
       .then(
         (result) => {
           this.setState({
             isLoaded: true,
-            matchups: result,
+            matchups: result.sort((a, b) => (a['matchup_id'] > b['matchup_id']) ? 1 : -1),
           });
         },
         // Note: it's important to handle errors here
@@ -81,12 +81,20 @@ class Board extends React.Component {
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
+      let rows = [];
+      for (let i = 0; i < matchups.length; i = i + 2) {
+        rows.push(
+          <Matchup player1={matchups[i]}
+            player2={matchups[i+1]}
+            rosters={rosters}
+            users={users}
+            />
+          );
+      }
       return (
-        <div>
-          {matchups.map(matchup => {
-            return <Matchup matchup={matchup} rosters={rosters} users={users} />
-          })}
-        </div>
+       <div>
+         {rows}
+       </div>
       );
     }
   }
