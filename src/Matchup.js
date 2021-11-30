@@ -22,7 +22,7 @@ class Matchup extends React.Component {
         const userId2 = rosters.find(roster => roster["roster_id"] === rosterId2)["owner_id"];
         const teamName2 = users.find(user => user["user_id"] === userId2)["display_name"];
         const player2Points = player2["points"];
-        if (player1Points == player2Points) {
+        if (player1Points === player2Points) {
             return (
                 <div className="match-row">
                     <p>Team: {teamName1} - Points: {player1Points}</p>

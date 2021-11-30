@@ -13,6 +13,7 @@ class Board extends React.Component {
       rosters: [],
     };
   }
+
   componentDidMount() {
     this.interval = setInterval(() => this.fetchData(), 90);
   }
@@ -62,9 +63,6 @@ class Board extends React.Component {
             matchups: result.sort((a, b) => (a['matchup_id'] > b['matchup_id']) ? 1 : -1),
           });
         },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
         (error) => {
           this.setState({
             isLoaded: true,
@@ -77,9 +75,9 @@ class Board extends React.Component {
   render() {
     const { error, isLoaded, matchups, rosters, users } = this.state;
     if (error) {
-      return <div>Error: {error.message}</div>;
+      return <div style={{margin:20}}>Error: {error.message}</div>;
     } else if (!isLoaded) {
-      return <div>Loading...</div>;
+      return <div style={{margin:20}}>Loading...</div>;
     } else {
       let rows = [];
       for (let i = 0; i < matchups.length; i = i + 2) {
@@ -92,7 +90,7 @@ class Board extends React.Component {
           );
       }
       return (
-       <div>
+       <div style={{margin:15}}>
          {rows}
        </div>
       );
