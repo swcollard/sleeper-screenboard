@@ -7,7 +7,9 @@ class Board extends React.Component {
     super(props);
     this.state = {
       error: null,
-      isLoaded: false,
+      isMatchupsLoaded: false,
+      isUsersLoaded: false,
+      isRostersLoaded: false,
       matchups: {},
       users: [],
       rosters: [],
@@ -29,11 +31,13 @@ class Board extends React.Component {
       .then(
         (result) => {
           this.setState({
+            isUsersLoaded: true,
             users: result,
           });
         },
         (error) => {
           this.setState({
+            isUsersLoaded: true,
             error,
           });
         }
@@ -44,11 +48,13 @@ class Board extends React.Component {
       .then(
         (result) => {
           this.setState({
+            isRostersLoaded: true,
             rosters: result,
           });
         },
         (error) => {
           this.setState({
+            isRostersLoaded: true,
             error,
           });
         }
@@ -59,13 +65,13 @@ class Board extends React.Component {
       .then(
         (result) => {
           this.setState({
-            isLoaded: true,
+            isMatchupsLoaded: true,
             matchups: result.sort((a, b) => (a['matchup_id'] > b['matchup_id']) ? 1 : -1),
           });
         },
         (error) => {
           this.setState({
-            isLoaded: true,
+            isMatchupsLoaded: true,
             error,
           });
         }
@@ -73,10 +79,10 @@ class Board extends React.Component {
   }
 
   render() {
-    const { error, isLoaded, matchups, rosters, users } = this.state;
+    const { error, isMatchupsLoaded, isRostersLoaded, isUsersLoaded, matchups, rosters, users } = this.state;
     if (error) {
       return <div style={{margin:20}}>Error: {error.message}</div>;
-    } else if (!isLoaded) {
+    } else if (!(isMatchupsLoaded && isRostersLoaded && isUsersLoaded)) {
       return <div style={{margin:20}}>Loading...</div>;
     } else {
       let rows = [];
